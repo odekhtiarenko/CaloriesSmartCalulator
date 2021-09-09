@@ -36,6 +36,7 @@
     <ProjectReference Include="..\CaloriesSmartCalulator.Data\CaloriesSmartCalulator.Data.csproj" />
     <ProjectReference Include="..\CaloriesSmartCalulator.Handlers.Contracts\CaloriesSmartCalulator.Handlers.Contracts.csproj" />
     <ProjectReference Include="..\CaloriesSmartCalulator.Handlers\CaloriesSmartCalulator.Handlers.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.ServiceClients\CaloriesSmartCalulator.ServiceClients.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

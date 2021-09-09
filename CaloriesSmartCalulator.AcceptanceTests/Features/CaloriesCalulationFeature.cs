@@ -16,5 +16,29 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
                                        _ => And_TaskShouldBeCreated())
                         .RunAsync();
         }
+
+        [Scenario]
+        [ScenarioCategory(Categories.CaloriesCalculator)]
+        public async Task CreateCaloriesCalculationTaskShouldCalculateSuccessfuly()
+        {
+            await Runner.AddSteps(Given_ProductsToCalculateCalories)
+                        .AddAsyncSteps(_ => Then_CallToEndpointShouldCreateCalculationTask(),
+                                       _ => And_TaskShouldBeCreated(),
+                                       _ => And_TaskShouldBeCalculated(),
+                                       _=>Then_TaskResultShouldBeRetrivedWithPRoperStatus(Dtos.Status.Completed))
+                        .RunAsync();
+        }
+
+        [Scenario]
+        [ScenarioCategory(Categories.CaloriesCalculator)]
+        public async Task CreateCaloriesCalculationTaskShouldCalculateFailed()
+        {
+            await Runner.AddSteps(Given_FailedProductsToCalculateCalories)
+                        .AddAsyncSteps(_ => Then_CallToEndpointShouldCreateCalculationTask(),
+                                       _ => And_TaskShouldBeCreated(),
+                                       _ => And_TaskShouldBeCalculated(),
+                                       _ => Then_TaskResultShouldBeRetrivedWithPRoperStatus(Dtos.Status.Failed))
+                        .RunAsync();
+        }
     }
 }

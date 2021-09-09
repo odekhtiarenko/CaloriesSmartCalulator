@@ -12,6 +12,7 @@
     <ProjectReference Include="..\CaloriesSmartCalulator.DAL\CaloriesSmartCalulator.DAL.csproj" />
     <ProjectReference Include="..\CaloriesSmartCalulator.Data\CaloriesSmartCalulator.Data.csproj" />
     <ProjectReference Include="..\CaloriesSmartCalulator.Handlers.Contracts\CaloriesSmartCalulator.Handlers.Contracts.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.ServiceClients\CaloriesSmartCalulator.ServiceClients.csproj" />
   </ItemGroup>
 
 </Project>

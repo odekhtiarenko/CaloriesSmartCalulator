@@ -3,7 +3,9 @@ using CaloriesSmartCalulator.Data;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Handlers.CommandHandlers;
 using CaloriesSmartCalulator.Handlers.QueryHandlers;
+using CaloriesSmartCalulator.HostedService;
 using CaloriesSmartCalulator.MapperProfile;
+using CaloriesSmartCalulator.ServiceClients;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace CaloriesSmartCalulator
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddMediatR(typeof(CreateCaloriesCalculationCommandHandler).Assembly,
                                 typeof(GetCaloriesCalculationTaskQueryHandler).Assembly);
 
@@ -38,6 +41,10 @@ namespace CaloriesSmartCalulator
 
             services.AddScoped<IRepository<CaloriesCalculationTask>, CaloriesCalculationTaskRepository>();
             services.AddScoped<IRepository<CaloriesCalculationTaskItem>, CaloriesCalculationTaskItemRepository>();
+
+            services.AddScoped<ICaloriesServiceClient, CaloriesServiceClient>();
+
+            services.AddHostedService<CaloriesCalculationHostedService>();
 
             services.AddSpaStaticFiles(configuration =>
             {

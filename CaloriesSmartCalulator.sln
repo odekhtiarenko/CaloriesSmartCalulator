@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.ApiT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.AcceptanceTests", "CaloriesSmartCalulator.AcceptanceTests\CaloriesSmartCalulator.AcceptanceTests.csproj", "{AD01848F-6547-4FCC-B8E3-D3CCE5453034}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.ServiceClients", "CaloriesSmartCalulator.ServiceClients\CaloriesSmartCalulator.ServiceClients.csproj", "{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{AD01848F-6547-4FCC-B8E3-D3CCE5453034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD01848F-6547-4FCC-B8E3-D3CCE5453034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD01848F-6547-4FCC-B8E3-D3CCE5453034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{A0803A42-A52C-4A91-A42B-B0B88900C2DE} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
 		{1198FA08-DFF9-4D3A-99C6-E89FA2856366} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
 		{AD01848F-6547-4FCC-B8E3-D3CCE5453034} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
+		{1CF344D9-D9E4-45A3-8286-D37B48D7A2E9} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1863B4D-387E-4728-B871-5F50750291ED}

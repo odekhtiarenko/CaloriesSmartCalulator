@@ -1,5 +1,6 @@
 ﻿using CaloriesSmartCalulator.AcceptanceTests.Helpers;
 using CaloriesSmartCalulator.Data;
+using CaloriesSmartCalulator.Dtos;
 using FluentAssertions;
 using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -50,6 +51,11 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
             _products = new[] { "bread", "meat", "cake" };
         }
 
+        private void Given_FailedProductsToCalculateCalories()
+        {
+            _products = new[] { "exception", "meat", "cake" };
+        }
+
         private async Task Then_CallToEndpointShouldCreateCalculationTask()
         {
             var response = await _httpClient.PostWithExpectedStatusCodeAsync($"/api/caloriescalculation/create", _products, HttpStatusCode.OK);
@@ -69,6 +75,28 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
             task.CaloriesCalculationTaskItems
                 .Should()
                 .Contain(x => _products.Contains(x.Product));
+        }
+
+        private async Task And_TaskShouldBeCalculated()
+        {
+            StatusObject taskStatus;
+            int i = 0;
+            do
+            {
+                var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/status/{_taskId}", HttpStatusCode.OK);
+                taskStatus = await response.Content.DeserializeAsync<StatusObject>();
+                await Task.Delay(1000);
+            } while (taskStatus.Status == Status.InProgress && taskStatus.Percentage < 100 && i < 30);
+
+            taskStatus.Percentage.Should().Be(100);
+        }
+
+        private async Task Then_TaskResultShouldBeRetrivedWithPRoperStatus(Status status)
+        {
+            var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/{_taskId}", HttpStatusCode.OK);
+            var taskStatus = await response.Content.DeserializeAsync<CalculationTaskResult>();
+
+            taskStatus.Status.Should().Be(status);
         }
     }
 }
