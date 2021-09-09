@@ -5,6 +5,16 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator", "CaloriesSmartCalulator\CaloriesSmartCalulator.csproj", "{C2089646-4626-4F33-B018-86CCE36E7315}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{11B65CD8-AAA7-45EA-9ED0-6958851A957C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.Data", "CaloriesSmartCalulator.Data\CaloriesSmartCalulator.Data.csproj", "{4CF927B1-0CDE-4872-AD49-A3A47A54FF73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.DAL", "CaloriesSmartCalulator.DAL\CaloriesSmartCalulator.DAL.csproj", "{89F02ECF-B218-4187-B726-4F42E37A28B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.DAL.Tests", "CaloriesSmartCalulator.DAL.Tests\CaloriesSmartCalulator.DAL.Tests.csproj", "{26E55423-CC1C-4E90-A76E-03293FF9B77F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +25,26 @@ Global
 		{C2089646-4626-4F33-B018-86CCE36E7315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2089646-4626-4F33-B018-86CCE36E7315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2089646-4626-4F33-B018-86CCE36E7315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F02ECF-B218-4187-B726-4F42E37A28B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F02ECF-B218-4187-B726-4F42E37A28B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F02ECF-B218-4187-B726-4F42E37A28B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F02ECF-B218-4187-B726-4F42E37A28B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
+		{89F02ECF-B218-4187-B726-4F42E37A28B7} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
+		{26E55423-CC1C-4E90-A76E-03293FF9B77F} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1863B4D-387E-4728-B871-5F50750291ED}
