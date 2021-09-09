@@ -52,7 +52,6 @@ namespace CaloriesSmartCalulator.Handlers.CommandHandlers
         {
             _caloriesCalculationTaskRespository.UpdateAsync(task);
             return Task.FromResult(Unit.Value);
-
         }
     }
 }

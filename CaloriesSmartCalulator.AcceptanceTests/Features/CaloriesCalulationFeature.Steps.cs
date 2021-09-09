@@ -1,5 +1,7 @@
 ﻿using CaloriesSmartCalulator.AcceptanceTests.Helpers;
+using CaloriesSmartCalulator.DAL;
 using CaloriesSmartCalulator.Data;
+using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Dtos;
 using FluentAssertions;
 using LightBDD.XUnit2;
@@ -31,19 +33,26 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
         public CaloriesCalulationFeature(WebApplicationFactory<Startup> factory)
         {
             _factory = factory;
-            _httpClient = _factory.CreateClient();
-
-            var builder = new ConfigurationBuilder()
-                                .AddJsonFile("appsettings.json")
-                                .AddJsonFile($"appsettings.Development.json", true)
-                                .AddEnvironmentVariables();
-
 
             var options = new DbContextOptionsBuilder<CaloriesCalulatorDBContext>()
-                              .UseSqlServer(builder.Build().GetConnectionString("DefaultConnection"))
-                              .Options;
-
+                        .UseInMemoryDatabase(databaseName: "DataBase")
+                        .Options;
             _db = new CaloriesCalulatorDBContext(options);
+
+            _httpClient = _factory.WithWebHostBuilder(builder => builder.ConfigureServices(services =>
+                   {
+                       var descriptor = services.SingleOrDefault(
+                            d => d.ServiceType == typeof(DbContextOptions<CaloriesCalulatorDBContext>));
+
+                       services.Remove(descriptor);
+
+                       services.AddDbContext<CaloriesCalulatorDBContext>(options =>
+                       {
+                           options.UseInMemoryDatabase("DataBase");
+                       });
+
+                   })
+            ).CreateClient();
         }
 
         private void Given_ProductsToCalculateCalories()

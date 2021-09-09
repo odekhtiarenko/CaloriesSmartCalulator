@@ -7,6 +7,6 @@
 
   <!-- lots of other elements -->
   <!-- phone refers to the input element; pass its `value` to an event handler -->
-  <button (click)="addItem()">Add</button>
+  <button (click)="addItem()" [disabled]="caloriesItem===undefined">Add</button>
   <button (click)="sendItems()" [disabled]="products.length < 1">Send</button>
 </div>

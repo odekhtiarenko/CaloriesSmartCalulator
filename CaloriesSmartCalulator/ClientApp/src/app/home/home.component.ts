@@ -24,11 +24,11 @@ export class HomeComponent {
   addItem() {
     if (this.caloriesItem != '' || this.caloriesItem == null)
       this.products.push(this.caloriesItem);
+
     this.caloriesItem = '';
   }
 
   sendItems() {
-
     this.http.post(this.baseUrl + 'api/caloriescalculation/create', this.products, { responseType: "text" }).subscribe(result => {
       this.router.navigate([`status/${result}`]);
     }, error => console.error(error));

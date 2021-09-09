@@ -67,7 +67,9 @@ namespace CaloriesSmartCalulator
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<CaloriesCalulatorDBContext>();
-                context.Database.Migrate();
+                if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+                    context.Database.Migrate();
+
             }
 
             app.UseHttpsRedirection();
