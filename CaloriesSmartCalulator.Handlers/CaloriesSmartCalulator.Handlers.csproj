@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="QueryHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CaloriesSmartCalulator.DAL\CaloriesSmartCalulator.DAL.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.Data\CaloriesSmartCalulator.Data.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.Handlers.Contracts\CaloriesSmartCalulator.Handlers.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
