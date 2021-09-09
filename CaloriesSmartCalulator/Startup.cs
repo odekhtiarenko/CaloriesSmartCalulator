@@ -1,9 +1,13 @@
+using CaloriesSmartCalulator.DAL;
+using CaloriesSmartCalulator.Data;
+using CaloriesSmartCalulator.Data.Entities;
+using CaloriesSmartCalulator.Handlers.CommandHandlers;
 using CaloriesSmartCalulator.MapperProfile;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +29,13 @@ namespace CaloriesSmartCalulator
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddMediatR(typeof(Startup).Assembly);
+            services.AddMediatR(typeof(CreateCaloriesCalculationCommandHandler).Assembly);
+
+            services.AddDbContext<CaloriesCalulatorDBContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+            services.AddScoped<IRepository<CaloriesCalculationTask>, CaloriesCalculationTaskRepository>();
+            services.AddScoped<IRepository<CaloriesCalculationTaskItem>, CaloriesCalculationTaskItemRepository>();
 
             services.AddSpaStaticFiles(configuration =>
             {

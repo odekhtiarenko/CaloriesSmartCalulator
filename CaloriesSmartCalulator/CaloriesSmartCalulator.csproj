@@ -28,7 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CaloriesSmartCalulator.DAL\CaloriesSmartCalulator.DAL.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.Data\CaloriesSmartCalulator.Data.csproj" />
     <ProjectReference Include="..\CaloriesSmartCalulator.Handlers.Contracts\CaloriesSmartCalulator.Handlers.Contracts.csproj" />
+    <ProjectReference Include="..\CaloriesSmartCalulator.Handlers\CaloriesSmartCalulator.Handlers.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
