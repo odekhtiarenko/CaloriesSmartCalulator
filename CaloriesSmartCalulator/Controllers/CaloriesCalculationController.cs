@@ -19,7 +19,7 @@ namespace CaloriesSmartCalulator.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("post")]
+        [HttpPost("create")]
         public async Task<string> CreateCalculationTask([FromBody] string[] products)
         {
             var result = await _mediator.Send(new CreateCaloriesCalculationCommand(products));
