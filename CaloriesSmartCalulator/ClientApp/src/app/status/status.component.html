@@ -1,0 +1,17 @@
+<p *ngIf="!statusObject"><em>Loading...</em></p>
+
+<div *ngIf="statusObject">
+  Calculating {{statusObject.percentage}}%...
+  <br />
+  <mat-progress-bar mode="determinate" [value]="statusObject.percentage"></mat-progress-bar>
+  <br />
+  <hr />
+  <div>
+    <ul>
+      <li *ngFor="let product of statusObject.products">{{product}}</li>
+    </ul>
+    <h2>Total:<b>{{statusObject.total}}</b> </h2>
+  </div>
+</div>
+
+

@@ -36,6 +36,8 @@ namespace CaloriesSmartCalulator.Handlers.CommandHandlers
             if (taskItem == null)
                 return new CalulteCaloriesForAProductResult("Taks item doesnt exists");
 
+            await Task.Delay(3000);
+
             try
             {
                 _logger.LogInformation($"Working on {request.Id} Thread: {Thread.CurrentThread.ManagedThreadId}");

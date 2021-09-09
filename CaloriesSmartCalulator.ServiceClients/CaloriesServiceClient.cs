@@ -12,11 +12,8 @@ namespace CaloriesSmartCalulator.ServiceClients
 
             if (productName.Equals("exception", StringComparison.InvariantCultureIgnoreCase))
             {
-                Task.Delay(random.Next(1000, 5000));
                 throw new Exception();
             }
-
-            Task.Delay(random.Next(1000, 5000));
 
             return Task.FromResult(random.Next(0, 500));
         }

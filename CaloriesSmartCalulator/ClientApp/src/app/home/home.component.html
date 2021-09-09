@@ -1,1 +1,12 @@
-<p>Welcome</p>
+<div>
+  <div *ngFor="let product of products">
+    <p>{{product}}</p>
+  </div>
+
+  <input placeholder="item" [(ngModel)]="caloriesItem" />
+
+  <!-- lots of other elements -->
+  <!-- phone refers to the input element; pass its `value` to an event handler -->
+  <button (click)="addItem()">Add</button>
+  <button (click)="sendItems()" [disabled]="products.length < 1">Send</button>
+</div>
