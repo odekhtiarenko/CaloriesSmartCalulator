@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.DAL"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.DAL.Tests", "CaloriesSmartCalulator.DAL.Tests\CaloriesSmartCalulator.DAL.Tests.csproj", "{26E55423-CC1C-4E90-A76E-03293FF9B77F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.Handlers.Contracts", "CaloriesSmartCalulator.Handlers.Contracts\CaloriesSmartCalulator.Handlers.Contracts.csproj", "{D496685B-7CD2-4826-AC59-3705CD53AED4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaloriesSmartCalulator.ApiTests", "CaloriesSmartCalulator.ApiTests\CaloriesSmartCalulator.ApiTests.csproj", "{1198FA08-DFF9-4D3A-99C6-E89FA2856366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26E55423-CC1C-4E90-A76E-03293FF9B77F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D496685B-7CD2-4826-AC59-3705CD53AED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D496685B-7CD2-4826-AC59-3705CD53AED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D496685B-7CD2-4826-AC59-3705CD53AED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D496685B-7CD2-4826-AC59-3705CD53AED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1198FA08-DFF9-4D3A-99C6-E89FA2856366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1198FA08-DFF9-4D3A-99C6-E89FA2856366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1198FA08-DFF9-4D3A-99C6-E89FA2856366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1198FA08-DFF9-4D3A-99C6-E89FA2856366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +57,8 @@ Global
 		{4CF927B1-0CDE-4872-AD49-A3A47A54FF73} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
 		{89F02ECF-B218-4187-B726-4F42E37A28B7} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
 		{26E55423-CC1C-4E90-A76E-03293FF9B77F} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
+		{D496685B-7CD2-4826-AC59-3705CD53AED4} = {11B65CD8-AAA7-45EA-9ED0-6958851A957C}
+		{1198FA08-DFF9-4D3A-99C6-E89FA2856366} = {8AB91DDC-2990-4C23-B0D7-2E96701F0E4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1863B4D-387E-4728-B871-5F50750291ED}
