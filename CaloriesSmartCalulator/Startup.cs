@@ -2,6 +2,7 @@ using CaloriesSmartCalulator.DAL;
 using CaloriesSmartCalulator.Data;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Handlers.CommandHandlers;
+using CaloriesSmartCalulator.Handlers.QueryHandlers;
 using CaloriesSmartCalulator.MapperProfile;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,8 @@ namespace CaloriesSmartCalulator
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddMediatR(typeof(CreateCaloriesCalculationCommandHandler).Assembly);
+            services.AddMediatR(typeof(CreateCaloriesCalculationCommandHandler).Assembly,
+                                typeof(GetCaloriesCalculationTaskQueryHandler).Assembly);
 
             services.AddDbContext<CaloriesCalulatorDBContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);

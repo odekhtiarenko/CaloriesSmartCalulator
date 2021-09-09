@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using CaloriesSmartCalulator.Dtos;
 using CaloriesSmartCalulator.Handlers.Contracts.Commands;
+using CaloriesSmartCalulator.Handlers.Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CaloriesSmartCalulator.Controllers
@@ -17,6 +20,22 @@ namespace CaloriesSmartCalulator.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+        }
+
+        [HttpGet("{taskId}")]
+        public async Task<IActionResult> GetTaskResult(Guid taskId)
+        {
+            var result = await _mediator.Send(new GetCaloriesCalculationTaskResultQuery(taskId));
+
+            return Ok(_mapper.Map<CalculationTaskResult>(result));
+        }
+
+        [HttpGet("status/{taskId}")]
+        public async Task<IActionResult> GetCalculationTaskStatus(Guid taskId)
+        {
+            var result = await _mediator.Send(new GetCaloriesCalculationTaskStatusQuery(taskId));
+
+            return Ok(_mapper.Map<StatusObject>(result));
         }
 
         [HttpPost("create")]
