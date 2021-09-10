@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Meal, MealResponse } from '../../models/Meal';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  public products: string[] = [];
+  public meal: Meal;
   public caloriesItem: string;
 
   public result: string;
@@ -19,18 +20,19 @@ export class HomeComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
     this.http = http;
     this.baseUrl = baseUrl;
+    this.meal = { products: [], name:'' };
   }
 
   addItem() {
     if (this.caloriesItem != '' || this.caloriesItem == null)
-      this.products.push(this.caloriesItem);
+      this.meal.products.push(this.caloriesItem);
 
     this.caloriesItem = '';
   }
 
   sendItems() {
-    this.http.post(this.baseUrl + 'api/caloriescalculation/create', this.products, { responseType: "text" }).subscribe(result => {
-      this.router.navigate([`status/${result}`]);
+    this.http.post<MealResponse>(this.baseUrl + 'api/caloriescalculation/create', this.meal).subscribe(result => {
+      this.router.navigate([`status/${result.id}`]);
     }, error => console.error(error));
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TaskResult } from '../../models/TaskResult';
 
 @Component({
   selector: 'result-cmp',
@@ -25,11 +26,5 @@ export class ResultComponent {
       this.result = result;
     }, error => console.error(error));
   }
-}
-
-interface TaskResult {
-  products: string[];
-  status: number;
-  totalCalories: number;
 }
 

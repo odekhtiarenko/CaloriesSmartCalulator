@@ -1,12 +1,33 @@
 <div>
-  <div *ngFor="let product of products">
+
+  <input placeholder="Meal name" [(ngModel)]="meal.name"
+         #caloriesItemError="ngModel"
+         maxlength="100"
+         required />
+  <br />
+  <input placeholder="Item" [(ngModel)]="caloriesItem"
+         #caloriesItemError="ngModel"
+         pattern="[A-Za-z]*"
+         required />
+
+  <button (click)="addItem()" [disabled]="caloriesItemError.invalid">Add</button>
+  <button (click)="sendItems()" [disabled]="caloriesItemError.invalid && meal.products.length==0">Send</button>
+
+  <div *ngIf="caloriesItemError.invalid && (caloriesItemError.dirty || caloriesItemError.touched)">
+    <div *ngIf="caloriesItemError.errors.required && meal.products.length==0">
+      <span style="background-color: red">CaloriesItem is required </span>
+    </div>
+    <div *ngIf="caloriesItemError.errors.pattern">
+      <span style="background-color: red">Only Letters allowed </span>
+    </div>
+    <div *ngIf="caloriesItemError.errors.maxlength">
+      <span style="background-color: red">Name max length 100 chars </span>
+    </div>
+  </div>
+  
+  <br />
+
+  <div *ngFor="let product of meal.products">
     <p>{{product}}</p>
   </div>
-
-  <input placeholder="item" [(ngModel)]="caloriesItem" />
-
-  <!-- lots of other elements -->
-  <!-- phone refers to the input element; pass its `value` to an event handler -->
-  <button (click)="addItem()" [disabled]="caloriesItem===undefined">Add</button>
-  <button (click)="sendItems()" [disabled]="products.length < 1">Send</button>
 </div>

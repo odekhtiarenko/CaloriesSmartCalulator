@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { StatusOject } from '../../models/StatusOject';
 
 @Component({
   selector: 'status-cmp',
@@ -25,7 +26,6 @@ export class StatusComponent {
     this.interval = setInterval(() => {
       this.http.get<StatusOject>(this.baseUrl + `api/caloriescalculation/status/${this.id}`).subscribe(result => {
         this.statusObject = result;
-        console.log(this.statusObject);
       }, error => console.error(error));
       if (this.statusObject.percentage == 100) {
         clearInterval(this.interval);
@@ -33,12 +33,5 @@ export class StatusComponent {
       }
     }, 1000);
   }
-}
-
-interface StatusOject {
-  percentage: number;
-  status: number;
-  products: string[];
-  total: number;
 }
 

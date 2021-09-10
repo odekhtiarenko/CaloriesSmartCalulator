@@ -5,4 +5,5 @@
     <li *ngFor="let product of result.products">{{product}}</li>
   </ul>
   <h2>Total:<b>{{result.total}}</b> </h2>
+  <h2 *ngIf="result.status==2">Calculation Failed</h2>
 </div>
