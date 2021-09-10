@@ -25,9 +25,11 @@ namespace CaloriesSmartCalulator.Handlers.CommandHandlers
             {
                 var task = new CaloriesCalculationTask();
                 task.CaloriesCalculationTaskItems = request.Products.Select(v => new CaloriesCalculationTaskItem() { Product = v }).ToList();
+                task.Name = request.Name;
+
                 var result = await _caloriesCalculationTaskRespository.InsertAsync(task);
 
-                return new CreateCaloriesCalculationResult(result.Id);
+                return new CreateCaloriesCalculationResult(result);
             }
             catch (Exception ex)
             {

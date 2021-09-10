@@ -42,7 +42,7 @@ namespace CaloriesSmartCalulator.Handlers.Tests
                 .Should()
                 .BeTrue();
 
-            result.Value
+            result.Value.Id
                 .Should()
                 .Be(task.Id);
         }

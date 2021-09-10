@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using CaloriesSmartCalulator.Dtos;
+using CaloriesSmartCalulator.Dtos.Requests;
+using CaloriesSmartCalulator.Dtos.Responses;
 using CaloriesSmartCalulator.Handlers.Contracts.Commands;
 using CaloriesSmartCalulator.Handlers.Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaloriesSmartCalulator.Controllers
@@ -39,16 +42,21 @@ namespace CaloriesSmartCalulator.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<string> CreateCalculationTask([FromBody] string[] products)
+        public async Task<IActionResult> CreateCalculationTask([FromBody] CalculateMealCaloriesRequest products)
         {
-            var result = await _mediator.Send(new CreateCaloriesCalculationCommand(products));
-
-            if (result.Success)
+            if (ModelState.IsValid)
             {
-                return result.Value.ToString();
+                var result = await _mediator.Send(_mapper.Map<CreateCaloriesCalculationCommand>(products));
+
+                if (result.Success)
+                {
+                    return Ok(_mapper.Map<CalculateMealCaloriesResponse>(result.Value));
+                }
+
+                return BadRequest(result.FailureMessage);
             }
 
-            return result.FailureMessage;
+            return BadRequest(ModelState.Values.SelectMany(x => x.Errors));
         }
     }
 }

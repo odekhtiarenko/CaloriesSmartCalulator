@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Dtos;
+using CaloriesSmartCalulator.Dtos.Requests;
+using CaloriesSmartCalulator.Dtos.Responses;
+using CaloriesSmartCalulator.Handlers.Contracts.Commands;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +25,9 @@ namespace CaloriesSmartCalulator.MapperProfile
                .ForMember(dest => dest.Status, opt => opt.MapFrom(x => GetTaskStatus(x)))
                .ForMember(dest => dest.Products, opt => opt.MapFrom(x => x.CaloriesCalculationTaskItems.Select(t => t.Product)))
                .ForMember(dest => dest.Total, opt => opt.MapFrom(x => x.CaloriesCalculationTaskItems.Sum(t => t.Calories)));
+
+            CreateMap<CalculateMealCaloriesRequest, CreateCaloriesCalculationCommand>();
+            CreateMap<CaloriesCalculationTask, CalculateMealCaloriesResponse>();
         }
 
         private Status GetTaskStatus(ICollection<CaloriesCalculationTaskItem> caloriesCalculationTaskItems)

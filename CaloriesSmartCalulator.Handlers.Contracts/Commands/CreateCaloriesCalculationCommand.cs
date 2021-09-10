@@ -6,11 +6,7 @@ namespace CaloriesSmartCalulator.Handlers.Contracts.Commands
 {
     public class CreateCaloriesCalculationCommand : IRequest<CreateCaloriesCalculationResult>
     {
-        public string[] Products { get; }
-      
-        public CreateCaloriesCalculationCommand(string[] products)
-        {
-            Products = products;
-        }
+        public string Name { get; set; }
+        public string[] Products { get; set; }
     }
 }

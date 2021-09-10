@@ -3,6 +3,7 @@ using AutoMapper;
 using CaloriesSmartCalulator.Controllers;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Dtos;
+using CaloriesSmartCalulator.Dtos.Requests;
 using CaloriesSmartCalulator.Handlers.Contracts.Commands;
 using CaloriesSmartCalulator.Handlers.Contracts.Queries;
 using CaloriesSmartCalulator.Handlers.Contracts.Results;
@@ -25,6 +26,8 @@ namespace CaloriesSmartCalulator.ApiTests
         private readonly Mock<IMediator> _mediatorMoq;
         private readonly IFixture _fixture;
 
+        private CalculateMealCaloriesRequest _request;
+
         public CaloriesCalculationControllerTests()
         {
             _fixture = new Fixture();
@@ -33,7 +36,8 @@ namespace CaloriesSmartCalulator.ApiTests
 
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             _mediatorMoq = new Mock<IMediator>();
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile<AutoMapperProfile>();
             });
 
@@ -43,32 +47,32 @@ namespace CaloriesSmartCalulator.ApiTests
         [Fact]
         public async Task CreateCalculationTask_ShouldReturnTaskId()
         {
-            var command = _fixture.Create<CreateCaloriesCalculationCommand>();
-            var result = new CreateCaloriesCalculationResult(Guid.NewGuid());
+            _request = new CalculateMealCaloriesRequest() { Name = "Name", Products = new[] { "test", "testA" } };
+            var result = new CreateCaloriesCalculationResult(_fixture.Create<CaloriesCalculationTask>());
 
             _mediatorMoq.Setup(x => x.Send(It.IsAny<CreateCaloriesCalculationCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(result);
-            
-            var response = await _controller.CreateCalculationTask(command.Products);
+
+            var response = (OkObjectResult)await _controller.CreateCalculationTask(_request);
             response.Should()
-                .NotBeNullOrEmpty()
+                .NotBeNull()
                 .And
-                .Be(result.Value.ToString());
+                .BeOfType(typeof(OkObjectResult));
         }
 
         [Fact]
         public async Task CreateCalculationTask_ShouldReturnFailureMessage()
         {
-            var command = _fixture.Create<CreateCaloriesCalculationCommand>();
+            _request = new CalculateMealCaloriesRequest() { Name = "Name", Products = new[] { "test", "testA" } };
             var exceptionMessage = "This is exception";
             var result = new CreateCaloriesCalculationResult(new Exception(exceptionMessage));
 
             _mediatorMoq.Setup(x => x.Send(It.IsAny<CreateCaloriesCalculationCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(result);
 
-            var response = await _controller.CreateCalculationTask(command.Products);
+            var response = await _controller.CreateCalculationTask(_request);
             response.Should()
-                .NotBeNullOrEmpty()
+                .NotBeNull()
                 .And
-                .Be(exceptionMessage);
+                .BeOfType(typeof(BadRequestObjectResult));
         }
 
         [Fact]
@@ -78,8 +82,8 @@ namespace CaloriesSmartCalulator.ApiTests
 
             _mediatorMoq.Setup(x => x.Send(It.IsAny<GetCaloriesCalculationTaskStatusQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(result);
 
-            var response = (OkObjectResult) await _controller.GetCalculationTaskStatus(Guid.NewGuid());
-            
+            var response = (OkObjectResult)await _controller.GetCalculationTaskStatus(Guid.NewGuid());
+
             response.Value
                     .Should()
                     .BeOfType(typeof(StatusObject));

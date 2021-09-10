@@ -3,6 +3,8 @@ using CaloriesSmartCalulator.DAL;
 using CaloriesSmartCalulator.Data;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Dtos;
+using CaloriesSmartCalulator.Dtos.Requests;
+using CaloriesSmartCalulator.Dtos.Responses;
 using FluentAssertions;
 using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -26,8 +28,8 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
         private readonly CaloriesCalulatorDBContext _db;
 
         #region TestData
-        private string[] _products;
-        private string _taskId;
+        private CalculateMealCaloriesRequest _meal;
+        private CalculateMealCaloriesResponse _task;
         #endregion
 
         public CaloriesCalulationFeature(WebApplicationFactory<Startup> factory)
@@ -57,33 +59,37 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
 
         private void Given_ProductsToCalculateCalories()
         {
-            _products = new[] { "bread", "meat", "cake" };
+            _meal = new CalculateMealCaloriesRequest();
+            _meal.Products = new[] { "rice", "meat", "cake" };
+            _meal.Name = "Breakfast";
         }
 
         private void Given_FailedProductsToCalculateCalories()
         {
-            _products = new[] { "exception", "meat", "cake" };
+            _meal = new CalculateMealCaloriesRequest();
+            _meal.Products = new[] { "exception", "meat", "cake" };
+            _meal.Name = "Breakfast";
         }
 
         private async Task Then_CallToEndpointShouldCreateCalculationTask()
         {
-            var response = await _httpClient.PostWithExpectedStatusCodeAsync($"/api/caloriescalculation/create", _products, HttpStatusCode.OK);
-            _taskId = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.PostWithExpectedStatusCodeAsync($"/api/caloriescalculation/create", _meal, HttpStatusCode.OK);
+            _task = await response.Content.DeserializeAsync<CalculateMealCaloriesResponse>();
 
-            _taskId.Should()
+            _task.Id.Should()
                 .NotBeEmpty();
         }
         private async Task And_TaskShouldBeCreated()
         {
             var task = await _db.CaloriesCalculationTasks.Include(t => t.CaloriesCalculationTaskItems)
-                                                         .FirstOrDefaultAsync(x => x.Id == Guid.Parse(_taskId));
+                                                         .FirstOrDefaultAsync(x => x.Id == _task.Id);
 
             task.Should()
                 .NotBeNull();
 
             task.CaloriesCalculationTaskItems
                 .Should()
-                .Contain(x => _products.Contains(x.Product));
+                .Contain(x => _meal.Products.Contains(x.Product));
         }
 
         private async Task And_TaskShouldBeCalculated()
@@ -92,7 +98,7 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
             int i = 0;
             do
             {
-                var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/status/{_taskId}", HttpStatusCode.OK);
+                var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/status/{_task.Id}", HttpStatusCode.OK);
                 taskStatus = await response.Content.DeserializeAsync<StatusObject>();
                 await Task.Delay(1000);
             } while (taskStatus.Status == Status.InProgress && taskStatus.Percentage < 100 && i < 30);
@@ -102,7 +108,7 @@ namespace CaloriesSmartCalulator.AcceptanceTests.Features
 
         private async Task Then_TaskResultShouldBeRetrivedWithPRoperStatus(Status status)
         {
-            var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/{_taskId}", HttpStatusCode.OK);
+            var response = await _httpClient.GetWithExpectedStatusCodeAsync($"/api/caloriescalculation/{_task.Id}", HttpStatusCode.OK);
             var taskStatus = await response.Content.DeserializeAsync<CalculationTaskResult>();
 
             taskStatus.Status.Should().Be(status);

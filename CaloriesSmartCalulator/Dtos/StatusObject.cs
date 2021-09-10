@@ -6,5 +6,6 @@
         public int Percentage { get; set; }
         public int Total { get; set; }
         public string[] Products { get; set; }
+        public string Name { get; set; }
     }
 }

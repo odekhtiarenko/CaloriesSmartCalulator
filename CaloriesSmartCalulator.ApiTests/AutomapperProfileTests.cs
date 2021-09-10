@@ -1,10 +1,14 @@
-﻿using AutoMapper;
+﻿using AutoFixture;
+using AutoMapper;
 using CaloriesSmartCalulator.Data.Entities;
 using CaloriesSmartCalulator.Dtos;
+using CaloriesSmartCalulator.Dtos.Requests;
+using CaloriesSmartCalulator.Handlers.Contracts.Commands;
 using CaloriesSmartCalulator.MapperProfile;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace CaloriesSmartCalulator.ApiTests
@@ -12,6 +16,7 @@ namespace CaloriesSmartCalulator.ApiTests
     public class AutomapperProfileTests
     {
         private readonly IMapper _mapper;
+        private readonly Fixture _fixture;
 
         public AutomapperProfileTests()
         {
@@ -21,6 +26,14 @@ namespace CaloriesSmartCalulator.ApiTests
             });
 
             _mapper = config.CreateMapper();
+
+
+            _fixture = new Fixture();
+            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+                                .ForEach(b => _fixture.Behaviors.Remove(b));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
             config.AssertConfigurationIsValid();
         }
 
@@ -29,6 +42,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
                 {
                     new CaloriesCalculationTaskItem(){
@@ -63,6 +77,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new StatusObject()
             {
+                Name = "Name",
                 Total = 100,
                 Percentage = 50,
                 Products = new[] { "cake", "meat", "bread" },
@@ -80,6 +95,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
                 {
                     new CaloriesCalculationTaskItem(){
@@ -117,6 +133,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new StatusObject()
             {
+                Name = "Name",
                 Total = 160,
                 Percentage = 100,
                 Products = new[] { "cake", "meat", "bread", "cow", "onion", "salt" },
@@ -134,6 +151,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
                 {
                     new CaloriesCalculationTaskItem(){
@@ -171,6 +189,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new StatusObject()
             {
+                Name = "Name",
                 Total = 140,
                 Percentage = 100,
                 Products = new[] { "cake", "meat", "bread", "cow", "onion", "salt" },
@@ -188,6 +207,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 InProgressOn = DateTime.Now,
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
                 {
@@ -223,6 +243,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new CalculationTaskResult()
             {
+                Name = "Name",
                 Total = 100,
                 Products = new[] { "cake", "meat", "bread", "cow", "onion", "salt" },
                 Status = Status.InProgress
@@ -239,6 +260,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 InProgressOn = DateTime.Now,
                 FinishedOn = DateTime.Now,
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
@@ -278,6 +300,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new CalculationTaskResult()
             {
+                Name = "Name",
                 Total = 160,
                 Products = new[] { "cake", "meat", "bread", "cow", "onion", "salt" },
                 Status = Status.Completed
@@ -294,6 +317,7 @@ namespace CaloriesSmartCalulator.ApiTests
         {
             var input = new CaloriesCalculationTask()
             {
+                Name = "Name",
                 InProgressOn = DateTime.Now,
                 FailedOn = DateTime.Now,
                 CaloriesCalculationTaskItems = new List<CaloriesCalculationTaskItem>()
@@ -333,6 +357,7 @@ namespace CaloriesSmartCalulator.ApiTests
 
             var expected = new CalculationTaskResult()
             {
+                Name = "Name",
                 Total = 160,
                 Products = new[] { "cake", "meat", "bread", "cow", "onion", "salt" },
                 Status = Status.Failed
@@ -342,6 +367,21 @@ namespace CaloriesSmartCalulator.ApiTests
 
             result.Should()
                   .BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void Map_CalculateMealCaloriesRequest_To_CaloriesCalculation()
+        {
+            var input = _fixture.Create<CalculateMealCaloriesRequest>();
+            var expected = new CreateCaloriesCalculationCommand();
+
+            expected.Name = input.Name;
+            expected.Products = input.Products;
+
+            var result = _mapper.Map<CreateCaloriesCalculationCommand>(input);
+
+            result.Should()
+            .BeEquivalentTo(expected);
         }
     }
 }

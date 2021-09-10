@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CaloriesSmartCalulator.Data.Entities;
+using System;
 
 namespace CaloriesSmartCalulator.Handlers.Contracts.Results
 {
-    public class CreateCaloriesCalculationResult : OperationResultBase<Guid>
+    public class CreateCaloriesCalculationResult : OperationResultBase<CaloriesCalculationTask>
     {
-        public CreateCaloriesCalculationResult(Guid value) : base(value)
+        public CreateCaloriesCalculationResult(CaloriesCalculationTask value) : base(value)
         {
         }
 
