@@ -20,6 +20,11 @@ namespace CaloriesSmartCalulator.Data
 
             modelBuilder
                 .Entity<CaloriesCalculationTask>()
+                .Property(t=>t.Name)
+                .HasMaxLength(100);
+
+            modelBuilder
+                .Entity<CaloriesCalculationTask>()
                 .HasMany(tI => tI.CaloriesCalculationTaskItems)
                 .WithOne(t => t.CaloriesCalculationTask);
 
